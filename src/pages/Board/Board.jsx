@@ -131,7 +131,7 @@ function Board() {
       destinationCards.splice(destination.index, 0, movedCard);
 
       // Logging العملية
-      console.log("Dragged card:", result);
+      console.log("Dragged card:", movedCard);
 
       console.log(
         `Moved card from list ${sourceList.id} (index ${source.index})`

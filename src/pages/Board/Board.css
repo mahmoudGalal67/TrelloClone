@@ -1,4 +1,4 @@
-.boards{
+.boards {
   width: auto;
   overflow-x: scroll;
 }
@@ -34,7 +34,7 @@
   min-width: 250px;
 }
 
-.boards .addList button{
+.boards .addList button {
   color: #101204 !important;
   padding: 6px 12px 6px 8px;
   border-radius: 8px;
@@ -71,11 +71,10 @@
   color: #515255 !important;
 }
 
-.boards .addList.addListCard > button:hover{
+.boards .addList.addListCard > button:hover {
   background: #a6c5e229;
-    color: #b6c2cf !important;
+  color: #b6c2cf !important;
 }
-
 
 .boards .addListForm {
   position: absolute;
@@ -110,17 +109,12 @@
   gap: 8px;
 }
 
-
-
-
-
 .boards .list > .wrapper {
   display: flex;
   flex-direction: column;
   gap: 8px;
   max-height: calc(100% - 140px);
   /* min-height: 100px; */
-  overflow-y: auto;
   padding-bottom: 10px;
 }
 

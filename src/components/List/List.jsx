@@ -16,7 +16,6 @@ import Form from "react-bootstrap/Form";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { IoIosMore } from "react-icons/io";
 
-
 function List({ list, setboard, boardId, board, setShow }) {
   const [showCardList, setshowCardList] = useState(false);
   const [error, seterror] = useState(null);
@@ -213,11 +212,11 @@ function List({ list, setboard, boardId, board, setShow }) {
                         width: "100%",
                         borderRadius: "8px",
                         backgroundColor: snapshot.isDragging
-                        ? "#888"
-                        : "#22272",
+                          ? "#888"
+                          : "#22272",
                         boxShadow: snapshot.isDragging
-                        ? "0px 4px 10px rgba(0, 0, 0, 0.2)"
-                        : "none",
+                          ? "0px 4px 10px rgba(0, 0, 0, 0.2)"
+                          : "none",
                         ...provided.draggableProps.style,
                         // transform: snapshot.isDragging
                         //   ? provided.draggableProps.style.transform
