@@ -22,6 +22,8 @@ function Workspace() {
   const [editingBoardId, setEditingBoardId] = useState(null);
   const [editedBoardName, setEditedBoardName] = useState("");
   const [editedBoardPhoto, setEditedBoardPhoto] = useState(null);
+  const [editedvisibility, seteditedvisibility] = useState(null);
+
   const [showModal, setShowModal] = useState(false);
   const [editingWorkspaceId, setEditingWorkspaceId] = useState(null);
   const [editedWorkspaceName, setEditedWorkspaceName] = useState("");
@@ -59,10 +61,12 @@ function Workspace() {
     setEditingBoardId(board_id);
     setEditedBoardName(currentBoardName);
     setEditedBoardPhoto(currentBoardPhoto);
+    seteditedvisibility("public");
     setShowModal(true);
   };
 
   const handleSaveClick = async (workspace_id, board_id) => {
+    setLoading(true);
     try {
       // تحديث اسم اللوحة
       const nameUpdateResponse = await api({
@@ -70,11 +74,13 @@ function Workspace() {
         method: "POST",
         headers: {
           Authorization: `Bearer ${cookies}`,
-          "Content-Type": "application/json",
+          "Content-Type": "multipart/form-data",
         },
         data: {
           workspace_id: workspace_id,
           name: editedBoardName,
+          photo: editedBoardPhoto,
+          visibility: editedvisibility,
         },
       });
 
@@ -104,7 +110,10 @@ function Workspace() {
           if (photoUploadResponse.data.success) {
             updatedPhotoUrl = photoUploadResponse.data.data.photo;
             console.log("Board photo uploaded successfully:", updatedPhotoUrl);
+            setLoading(false);
           } else {
+            setLoading(false);
+
             console.log(
               "Photo upload failed:",
               photoUploadResponse.data.message
@@ -471,10 +480,36 @@ function Workspace() {
             />
           </Form.Group>
           <Form.Group controlId="formBoardPhoto">
-            <Form.Label>Board Photo</Form.Label>
+            {editedBoardPhoto && editedBoardPhoto instanceof File ? (
+              <img
+                src={URL.createObjectURL(editedBoardPhoto)}
+                alt=""
+                style={{ width: "100%", margin: "15px 0" }}
+              />
+            ) : (
+              <img
+                src={`https://back.alyoumsa.com/public/storage/${editedBoardPhoto}`}
+                alt=""
+                style={{ width: "100%", margin: "15px 0" }}
+              />
+            )}
+            <Form.Label
+              for="boardFile"
+              style={{
+                cursor: "pointer",
+                textAlign: "center",
+                margin: "8px auto",
+                display: "block",
+              }}
+            >
+              Edit Board Photo
+            </Form.Label>
             <Form.Control
               type="file"
+              required={false}
               accept="image/*"
+              style={{ display: "none" }}
+              id="boardFile"
               onChange={(e) => {
                 const file = e.target.files[0];
                 if (file && file.size > 5 * 1024 * 1024) {
@@ -507,7 +542,7 @@ function Workspace() {
               handleSaveClick(workspace.id, editingBoardId);
             }}
           >
-            Save Changes
+            {loading ? "Loading" : "Save Changes"}
           </Button>
         </Modal.Footer>
       </Modal>
